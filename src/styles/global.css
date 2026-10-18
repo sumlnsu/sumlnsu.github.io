@@ -100,7 +100,7 @@ html.no-anim [data-reveal] { transition: none !important; }   /* 목록 복귀 �
 /* Hero line mask reveal */
 .line-mask { display: block; overflow: hidden; padding-bottom: .08em; }
 .line-mask > span {
-  display: block; transform: translateY(105%);
+  display: block; transform: translateY(105%); text-wrap: balance;
   animation: line-up var(--d-slow) var(--ease-out) forwards;
   animation-delay: calc(120ms + var(--i, 0) * 110ms);
 }

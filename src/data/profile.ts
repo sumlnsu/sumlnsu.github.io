@@ -30,7 +30,7 @@ export const tracks: Record<Track, {
     tab: '전체',
     role: 'Data · Automation · AX',
     lines: ['반복되는 일의 원인을 찾고,', '데이터와 자동화로', '일하는 방식을 바꿉니다.'],
-    lead: '데이터사이언스를 전공하고, 에듀테크 스타트업 경영데이터팀에서 데이터 파이프라인, 사내 조회 도구, KPI 기준을 만들었습니다.\n지금은 베이직스에서 전사 AX를 맡고 있습니다.',
+    lead: '에듀테크 스타트업에서 데이터 파이프라인과 KPI 기준을 만들었고,\n지금은 베이직스에서 전사 AX를 맡고 있습니다.',
     metrics: [
       { value: '12초 → 1~2초', label: '사내 데이터 조회 시간' },
       { value: '30%', countTo: 30, suffix: '%', label: '데이터 운영 리소스 절감' },
