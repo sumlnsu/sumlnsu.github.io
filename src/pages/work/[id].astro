@@ -1,0 +1,174 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Metric from '../../components/Metric.astro';
+import Flow from '../../components/Flow.astro';
+import Contact from '../../components/Contact.astro';
+
+export async function getStaticPaths() {
+  const all = (await getCollection('work')).sort((a, b) => a.data.order.all! - b.data.order.all!);
+  return all.map((entry, i) => ({
+    params: { id: entry.id },
+    props: { entry, prev: all[i - 1] ?? null, next: all[i + 1] ?? null },
+  }));
+}
+
+interface Props { entry: CollectionEntry<'work'>; prev: CollectionEntry<'work'> | null; next: CollectionEntry<'work'> | null; }
+const { entry, prev, next } = Astro.props;
+const d = entry.data;
+const { Content, headings } = await render(entry);
+const toc = headings.filter((h) => h.depth === 2);
+const meta = [
+  ['기간', d.period],
+  ['형태', [d.kind, d.team].filter(Boolean).join(' · ')],
+  ['역할', d.role],
+  d.org ? ['소속', d.org] : null,
+].filter(Boolean) as [string, string][];
+---
+<Base title={`${d.title} — 김수민`} description={d.summary}>
+  <article class="container detail">
+    <a href="/" class="back" data-back-link>← 프로젝트 목록</a>
+
+    <header class="detail__head">
+      <p class="eyebrow fade-up" style="--i:0">{d.kind}{d.domain && ` · ${d.domain}`}</p>
+      <h1 class="detail__title" transition:name={`title-${entry.id}`}>{d.title}</h1>
+      <p class="detail__summary fade-up" style="--i:1">{d.summary}</p>
+      <dl class="detail__meta fade-up" style="--i:2">
+        {meta.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
+      </dl>
+    </header>
+
+    <section class="tldr" aria-labelledby="tldr-title" data-reveal>
+      <h2 id="tldr-title" class="tldr__title"><span class="serif-i">TL;DR</span> 30초 요약</h2>
+      <ol>{d.tldr.map((line, i) => <li><span class="tldr__no serif">{i + 1}</span><span>{line}</span></li>)}</ol>
+    </section>
+
+    {d.metrics.length > 0 && (
+      <section class="detail__metrics" aria-label="성과 지표">
+        {d.metrics.map((m, i) => <div data-reveal style={`--i:${i}`}><Metric {...m} size="md" /></div>)}
+      </section>
+    )}
+
+    {d.flow.length > 0 && (
+      <section class="detail__flow" aria-label="처리 흐름">
+        <p class="eyebrow" data-reveal>Flow</p>
+        <Flow steps={d.flow} />
+      </section>
+    )}
+
+    <div class="detail__body">
+      <aside class="toc" aria-label="이 페이지 목차">
+        <p class="eyebrow toc__label">Contents</p>
+        <nav data-toc>
+          {toc.map((h) => <a href={`#${h.slug}`}>{h.text}</a>)}
+        </nav>
+        {d.stack.length > 0 && (
+          <div class="toc__stack">
+            <p class="eyebrow">Stack</p>
+            <ul>{d.stack.map((s) => <li class="chip">{s}</li>)}</ul>
+          </div>
+        )}
+      </aside>
+
+      <div class="prose" data-reveal>
+        <Content />
+
+        {d.links.length > 0 && (
+          <div class="links">
+            <h2>더 보기</h2>
+            <ul>{d.links.map((l) => <li><a class="link-card" href={l.href} target="_blank" rel="noopener"><span>{l.label}</span><span aria-hidden="true">↗</span></a></li>)}</ul>
+          </div>
+        )}
+
+        {d.askMe.length > 0 && (
+          <div class="ask">
+            <p class="ask__label"><span class="serif-i">Ask me about</span> 면접에서 물어봐 주세요</p>
+            <ul>{d.askMe.map((q) => <li>{q}</li>)}</ul>
+          </div>
+        )}
+      </div>
+    </div>
+
+    <nav class="pager" aria-label="다른 프로젝트">
+      {prev ? <a href={`/work/${prev.id}/`} class="pager__item"><span class="eyebrow">← 이전</span><span>{prev.data.title}</span></a> : <span />}
+      {next ? <a href={`/work/${next.id}/`} class="pager__item pager__item--next"><span class="eyebrow">다음 →</span><span>{next.data.title}</span></a> : <span />}
+    </nav>
+  </article>
+  <Contact />
+</Base>
+
+<style>
+  .detail { padding-top: var(--s-7); }
+  .back { display: inline-block; font-size: var(--t-small); color: var(--c-muted); font-weight: 500; transition: color var(--d-fast), transform var(--d-base) var(--ease-out); }
+  .back:hover { color: var(--c-ink); transform: translateX(-4px); }
+
+  .detail__head { display: grid; gap: var(--s-4); padding-block: var(--s-7) var(--s-7); }
+  .detail__title { font-size: var(--t-h1); font-weight: 800; letter-spacing: -.04em; max-width: 20ch; width: fit-content; }
+  .detail__summary { font-size: var(--t-lead); max-width: 640px; }
+  .detail__meta { display: grid; grid-template-columns: repeat(4, auto); justify-content: start; gap: var(--s-6); margin-top: var(--s-4); padding-top: var(--s-5); border-top: 1px solid var(--c-line); }
+  .detail__meta dt { font-size: var(--t-micro); color: var(--c-muted); letter-spacing: .04em; }
+  .detail__meta dd { font-size: var(--t-small); color: var(--c-ink); font-weight: 500; margin-top: 2px; max-width: 32ch; }
+
+  .tldr { padding: clamp(24px, 4vw, 40px); border-radius: var(--r-lg); background: var(--c-accent-soft); }
+  .tldr__title { font-size: var(--t-small); font-weight: 700; display: flex; align-items: baseline; gap: var(--s-2); margin-bottom: var(--s-4); color: var(--c-accent); }
+  .tldr__title .serif-i { font-size: 1.5rem; }
+  .tldr ol { display: grid; gap: var(--s-3); }
+  .tldr li { display: grid; grid-template-columns: 28px 1fr; gap: var(--s-2); color: var(--c-ink); font-size: var(--t-body); line-height: 1.65; }
+  .tldr__no { font-size: 1.35rem; line-height: 1.2; color: var(--c-accent); }
+
+  .detail__metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--s-6) var(--s-5); padding-block: var(--s-8); }
+  .detail__flow { display: grid; gap: var(--s-4); padding-bottom: var(--s-8); }
+
+  .detail__body { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: var(--s-8); padding-top: var(--s-7); border-top: 1px solid var(--c-line); }
+  .toc { position: sticky; top: calc(var(--header-h) + 24px); align-self: start; display: grid; gap: var(--s-6); }
+  .toc nav { display: grid; gap: 2px; margin-top: var(--s-3); border-left: 1px solid var(--c-line); }
+  .toc nav a { padding: 6px 0 6px var(--s-4); margin-left: -1px; border-left: 2px solid transparent; font-size: var(--t-small); color: var(--c-muted); transition: color var(--d-fast), border-color var(--d-fast); }
+  .toc nav a:hover { color: var(--c-ink); }
+  .toc nav a.is-active { color: var(--c-ink); border-left-color: var(--c-accent); font-weight: 600; }
+  .toc__stack ul { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--s-3); }
+
+  .prose { max-width: var(--w-text); }
+  .prose :global(h2) { font-size: var(--t-h2); margin: var(--s-8) 0 var(--s-4); }
+  .prose :global(h2:first-child) { margin-top: 0; }
+  .prose :global(p) { margin-bottom: var(--s-4); }
+  .prose :global(strong) { color: var(--c-ink); font-weight: 700; }
+  .prose :global(ul), .prose :global(ol) { display: grid; gap: var(--s-2); margin-bottom: var(--s-4); }
+  .prose :global(ul > li) { position: relative; padding-left: 18px; }
+  .prose :global(ul > li)::before { content: ""; position: absolute; left: 2px; top: .8em; width: 5px; height: 5px; border-radius: 50%; background: var(--c-line-strong); }
+  .prose :global(ol) { counter-reset: n; }
+  .prose :global(ol > li) { position: relative; padding-left: 28px; counter-increment: n; }
+  .prose :global(ol > li)::before { content: counter(n); position: absolute; left: 0; top: 0; font-family: var(--f-serif); font-size: 1.15rem; color: var(--c-accent); }
+  .prose :global(table) { width: 100%; border-collapse: collapse; font-size: var(--t-small); margin-bottom: var(--s-5); display: block; overflow-x: auto; }
+  .prose :global(th), .prose :global(td) { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--c-line); vertical-align: top; }
+  .prose :global(th) { color: var(--c-muted); font-weight: 600; font-size: var(--t-caption); }
+
+  .links { margin-top: var(--s-8); }
+  .links ul { display: grid; gap: var(--s-2); }
+  .links li { padding: 0 !important; }
+  .links li::before { display: none; }
+  .link-card {
+    display: flex; justify-content: space-between; align-items: center; padding: var(--s-4) var(--s-5);
+    border: 1px solid var(--c-line); border-radius: var(--r-md); background: var(--c-surface); color: var(--c-ink); font-weight: 600;
+    transition: border-color var(--d-fast), transform var(--d-base) var(--ease-out);
+  }
+  .link-card:hover { border-color: var(--c-ink); transform: translateY(-2px); }
+
+  .ask { margin-top: var(--s-8); padding: var(--s-5) var(--s-5) var(--s-3); border-radius: var(--r-lg); border: 1px dashed var(--c-line-strong); }
+  .ask__label { display: flex; align-items: baseline; gap: var(--s-2); font-size: var(--t-small); font-weight: 700; color: var(--c-ink); }
+  .ask__label .serif-i { font-size: 1.35rem; }
+
+  .pager { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); padding-block: var(--s-9) var(--s-6); }
+  .pager__item { display: grid; gap: var(--s-2); padding: var(--s-5); border-radius: var(--r-lg); border: 1px solid var(--c-line); color: var(--c-ink); font-weight: 600; transition: background-color var(--d-base) var(--ease-out); }
+  .pager__item:hover { background: var(--c-surface); }
+  .pager__item--next { text-align: right; justify-items: end; }
+
+  @media (max-width: 960px) {
+    .detail__body { grid-template-columns: 1fr; gap: var(--s-6); }
+    .toc { position: static; }
+    .toc nav, .toc__label { display: none; }
+  }
+  @media (max-width: 640px) {
+    .detail__meta { grid-template-columns: 1fr 1fr; gap: var(--s-4); }
+    .pager { grid-template-columns: 1fr; }
+  }
+</style>

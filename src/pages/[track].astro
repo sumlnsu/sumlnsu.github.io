@@ -1,0 +1,11 @@
+---
+// /ax/, /da/, /dae/ : 직무별 관점 페이지. 이력서마다 해당 주소를 건다.
+import HomePage from '../components/HomePage.astro';
+import type { Track } from '../data/profile';
+
+export function getStaticPaths() {
+  return (['ax', 'da', 'dae'] as Track[]).map((track) => ({ params: { track }, props: { track } }));
+}
+const { track } = Astro.props as { track: Track };
+---
+<HomePage track={track} />

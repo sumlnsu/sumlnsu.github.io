@@ -1,0 +1,55 @@
+---
+import { principles, experience } from '../data/profile';
+---
+<section id="about" class="section container" aria-labelledby="about-title">
+  <div class="section-head" data-reveal>
+    <p class="section-head__label"><span class="serif-i">How I work</span><span class="eyebrow">일하는 방식</span></p>
+    <h2 id="about-title">문제가 다시 생기지 않는 구조를 만듭니다</h2>
+  </div>
+
+  <ol class="principles">
+    {principles.map((p, i) => (
+      <li class="principle" data-reveal style={`--i:${i}`}>
+        <span class="principle__no serif">{p.no}</span>
+        <h3>{p.title}</h3>
+        <p>{p.body}</p>
+      </li>
+    ))}
+  </ol>
+
+  <div class="exp">
+    <h3 class="exp__title eyebrow" data-reveal>Experience</h3>
+    <ol>
+      {experience.map((e, i) => (
+        <li class="exp__row" data-reveal style={`--i:${i % 3}`}>
+          <p class="exp__period">{e.period}</p>
+          <div class="exp__body">
+            <p class="exp__org">
+              <strong>{e.org}</strong>{e.role && <span> · {e.role}</span>}
+              {e.note && <span class="chip chip--accent">{e.note}</span>}
+            </p>
+            <p class="exp__desc">{e.body}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-6); margin-bottom: var(--s-9); }
+  .principle { display: grid; gap: var(--s-3); align-content: start; padding-top: var(--s-5); border-top: 1px solid var(--c-ink); }
+  .principle__no { font-size: 3rem; line-height: 1; color: var(--c-accent); }
+  .principle h3 { font-size: var(--t-h3); }
+  .principle p { font-size: var(--t-small); color: var(--c-ink-2); }
+  .exp__title { margin-bottom: var(--s-4); }
+  .exp__row { display: grid; grid-template-columns: 200px 1fr; gap: var(--s-5); padding-block: var(--s-5); border-top: 1px solid var(--c-line); }
+  .exp__period { font-size: var(--t-small); color: var(--c-muted); font-variant-numeric: tabular-nums; }
+  .exp__org { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); color: var(--c-ink); }
+  .exp__org span:not(.chip) { color: var(--c-muted); }
+  .exp__desc { margin-top: var(--s-1); font-size: var(--t-small); max-width: 64ch; }
+  @media (max-width: 860px) {
+    .principles { grid-template-columns: 1fr; gap: var(--s-5); }
+    .exp__row { grid-template-columns: 1fr; gap: var(--s-1); }
+  }
+</style>

@@ -1,0 +1,24 @@
+---
+// 숫자 지표 1개. countTo가 있으면 화면에 들어올 때 0부터 올라간다 (JS 없으면 최종값 표시).
+interface Props { value: string; countTo?: number; suffix?: string; label: string; size?: 'lg' | 'md'; }
+const { value, countTo, suffix = '', label, size = 'lg' } = Astro.props;
+const display = countTo !== undefined ? countTo.toLocaleString('ko-KR') + suffix : value;
+const long = display.length > 7; // "12초 → 1~2초"처럼 긴 값은 한 단계 작게
+---
+<div class:list={['metric', `metric--${size}`, { 'metric--long': long }]}>
+  <p class="metric__value" {...(countTo !== undefined ? { 'data-count': countTo, 'data-suffix': suffix } : {})}>{display}</p>
+  <p class="metric__label">{label}</p>
+</div>
+
+<style>
+  .metric { display: grid; gap: var(--s-2); align-content: start; min-width: 0; }
+  .metric__value {
+    font-family: var(--f-serif); color: var(--c-ink); line-height: 1.05; letter-spacing: -.01em;
+    font-variant-numeric: tabular-nums;
+  }
+  .metric--lg .metric__value { font-size: clamp(2rem, 1.4rem + 2.4vw, 3.5rem); }
+  .metric--md .metric__value { font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.4rem); }
+  .metric--lg.metric--long .metric__value { font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.5rem); }
+  .metric--md.metric--long .metric__value { font-size: clamp(1.4rem, 1.2rem + .8vw, 1.9rem); }
+  .metric__label { font-size: var(--t-caption); color: var(--c-muted); line-height: 1.5; }
+</style>

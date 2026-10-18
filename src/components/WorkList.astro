@@ -1,0 +1,58 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props { items: CollectionEntry<'work'>[]; }
+const { items } = Astro.props;
+---
+<ol class="work-list">
+  {items.map((p, i) => (
+    <li data-reveal style={`--i:${i % 4}`}>
+      <a href={`/work/${p.id}/`} class="row">
+        <span class="row__no serif-i" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+        <span class="row__main">
+          <span class="row__meta">
+            <span>{p.data.kind}</span><span aria-hidden="true">·</span><span>{p.data.period}</span>
+            {p.data.domain && (<><span aria-hidden="true">·</span><span>{p.data.domain}</span></>)}
+          </span>
+          <span class="row__title" transition:name={`title-${p.id}`}>{p.data.title}</span>
+          <span class="row__summary">{p.data.summary}</span>
+        </span>
+        {p.data.metrics[0] && (
+          <span class="row__metric">
+            <span class="row__metric-value serif">{p.data.metrics[0].value}</span>
+            <span class="row__metric-label">{p.data.metrics[0].label}</span>
+          </span>
+        )}
+        <span class="row__arrow" aria-hidden="true">→</span>
+      </a>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .work-list { border-top: 1px solid var(--c-line); }
+  .work-list li { border-bottom: 1px solid var(--c-line); }
+  .row {
+    position: relative; display: grid; grid-template-columns: 56px 1fr 200px 32px; align-items: center; gap: var(--s-5);
+    padding: var(--s-6) var(--s-4); margin-inline: calc(var(--s-4) * -1); border-radius: var(--r-md);
+    transition: background-color var(--d-base) var(--ease-out);
+  }
+  .row:hover { background: var(--c-surface); }
+  .row__no { font-size: 1.6rem; color: var(--c-muted); transition: color var(--d-fast) var(--ease-out); }
+  .row:hover .row__no { color: var(--c-accent); }
+  .row__main { display: grid; gap: var(--s-2); }
+  .row__meta { display: flex; flex-wrap: wrap; gap: 6px; font-size: var(--t-caption); color: var(--c-muted); }
+  .row__title { width: fit-content; font-size: var(--t-h3); font-weight: 700; color: var(--c-ink); letter-spacing: -.02em; line-height: var(--lh-snug); }
+  .row__summary { color: var(--c-ink-2); font-size: var(--t-small); max-width: 62ch; }
+  .row__metric { display: grid; gap: 2px; text-align: right; }
+  .row__metric-value { font-size: 1.6rem; color: var(--c-ink); line-height: 1.1; white-space: nowrap; }
+  .row__metric-label { font-size: var(--t-micro); color: var(--c-muted); }
+  .row__arrow { font-size: 1.25rem; color: var(--c-muted); transition: transform var(--d-base) var(--ease-out), color var(--d-fast); }
+  .row:hover .row__arrow { transform: translateX(6px); color: var(--c-ink); }
+  @media (max-width: 860px) {
+    .row { grid-template-columns: 40px 1fr 24px; gap: var(--s-4); padding-block: var(--s-5); }
+    .row__metric { grid-column: 2; grid-row: 2; text-align: left; display: flex; align-items: baseline; gap: var(--s-2); }
+    .row__metric-value { font-size: 1.3rem; }
+    .row__no { align-self: start; padding-top: 2px; }
+    .row__arrow { grid-column: 3; grid-row: 1; }
+  }
+</style>

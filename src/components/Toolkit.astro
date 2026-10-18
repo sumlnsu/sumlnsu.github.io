@@ -1,0 +1,35 @@
+---
+import { toolkit, type Track } from '../data/profile';
+interface Props { track: Track; }
+const { track } = Astro.props;
+const groups = toolkit
+  .filter((g) => g.order[track] !== undefined)
+  .sort((a, b) => (a.order[track]! - b.order[track]!));
+---
+<section class="section container" aria-labelledby="toolkit-title">
+  <div class="section-head" data-reveal>
+    <p class="section-head__label"><span class="serif-i">Toolkit</span><span class="eyebrow">사용 도구</span></p>
+    <h2 id="toolkit-title">실무와 프로젝트에서 직접 써 본 것만 적었습니다</h2>
+  </div>
+  <div class="groups">
+    {groups.map((g, i) => (
+      <div class:list={['group', { 'group--learning': g.group === '학습 중' }]} data-reveal style={`--i:${i % 3}`}>
+        <h3>{g.group}</h3>
+        <ul>{g.items.map((it) => <li class="chip">{it}</li>)}</ul>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .groups { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--s-4); }
+  .group {
+    display: grid; gap: var(--s-4); align-content: start; padding: var(--s-5);
+    background: var(--c-surface); border: 1px solid var(--c-line); border-radius: var(--r-lg);
+    transition: transform var(--d-base) var(--ease-out), box-shadow var(--d-base) var(--ease-out);
+  }
+  .group:hover { transform: translateY(-3px); box-shadow: var(--shadow-1); }
+  .group h3 { font-size: var(--t-small); font-weight: 700; letter-spacing: -.01em; }
+  .group ul { display: flex; flex-wrap: wrap; gap: 6px; }
+  .group--learning { background: transparent; border-style: dashed; }
+</style>
