@@ -13,11 +13,14 @@ const long = display.length > 7; // "12초 → 1~2초"처럼 긴 값은 한 단�
 <style>
   .metric { display: grid; gap: var(--s-2); align-content: start; min-width: 0; }
   .metric__value {
-    color: var(--c-ink); font-weight: 700; line-height: 1.1; letter-spacing: var(--tracking-num);
+    color: var(--c-accent); font-weight: 700; line-height: 1.1; letter-spacing: var(--tracking-num);
     font-variant-numeric: tabular-nums;
   }
-  .metric--lg .metric__value { font-size: clamp(2rem, 1.4rem + 2.4vw, 3.5rem); }
-  .metric--md .metric__value { font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.4rem); }
+  /* 숫자 칸 높이를 가장 큰 글자 기준(--vh)으로 고정하고 바닥에 맞춘다 → 긴 값이 작아져도 숫자 바닥선·라벨 높이가 일치 */
+  .metric--lg { --vh: clamp(2rem, 1.4rem + 2.4vw, 3.5rem); }
+  .metric--md { --vh: clamp(1.6rem, 1.3rem + 1.2vw, 2.4rem); }
+  .metric__value { display: flex; align-items: flex-end; min-height: calc(var(--vh) * 1.1); }
+  .metric--lg .metric__value, .metric--md .metric__value { font-size: var(--vh); }
   .metric--lg.metric--long .metric__value { font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.5rem); }
   .metric--md.metric--long .metric__value { font-size: clamp(1.4rem, 1.2rem + .8vw, 1.9rem); }
   .metric__label { font-size: var(--t-caption); color: var(--c-muted); line-height: 1.5; }

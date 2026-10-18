@@ -16,7 +16,7 @@ const items = (await getCollection('work'))
   .filter((p) => p.data.order[track] !== null)
   .sort((a, b) => a.data.order[track]! - b.data.order[track]!);
 ---
-<Base title={t.title} description={t.lead}>
+<Base title={t.title} description={t.lead.replace('\n', ' ')}>
   <div data-track-path={t.path}>
     <Hero track={track} />
 
@@ -43,7 +43,7 @@ const items = (await getCollection('work'))
 
 <style>
   .metrics {
-    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-6);
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-6); align-items: start;
     padding-block: var(--s-7); border-block: 1px solid var(--c-line);
   }
   @media (max-width: 860px) { .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-6) var(--s-5); } }

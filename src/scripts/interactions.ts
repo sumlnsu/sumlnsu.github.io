@@ -15,6 +15,7 @@ export function initPage() {
   cleanups.forEach((fn) => fn());
   cleanups = [];
   rememberTrack();
+  returnPosition();
   reveal();
   countUp();
   header();
@@ -33,6 +34,31 @@ function rememberTrack() {
   try { path = sessionStorage.getItem('trackPath') || '/'; } catch {}
   document.querySelectorAll<HTMLAnchorElement>('[data-home-link], [data-back-link]').forEach((a) => (a.href = path));
   document.querySelectorAll<HTMLAnchorElement>('[data-home-anchor]').forEach((a) => (a.href = `${path}#${a.dataset.homeAnchor}`));
+}
+
+/* 목록 → 상세 → "프로젝트 목록"으로 돌아오면, 처음부터가 아니라 보던 위치로 복귀 (등장 애니메이션도 다시 하지 않음) */
+function returnPosition() {
+  const isList = !!document.querySelector('[data-track-path]');
+  const on = (el: Element, fn: () => void) => { el.addEventListener('click', fn); cleanups.push(() => el.removeEventListener('click', fn)); };
+
+  if (isList) {
+    let y: string | null = null;
+    try { y = sessionStorage.getItem('restoreY'); sessionStorage.removeItem('restoreY'); } catch {}
+    if (y !== null) {
+      const d = document.documentElement;
+      d.classList.add('no-anim');
+      document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-in'));
+      d.style.scrollBehavior = 'auto';
+      window.scrollTo(0, Number(y));
+      d.style.scrollBehavior = '';
+      requestAnimationFrame(() => requestAnimationFrame(() => d.classList.remove('no-anim')));
+    }
+    document.querySelectorAll('a[href^="/work/"]').forEach((a) =>
+      on(a, () => { try { sessionStorage.setItem('listY', String(window.scrollY)); } catch {} }));
+  }
+
+  document.querySelectorAll('[data-back-link]').forEach((a) =>
+    on(a, () => { try { const y = sessionStorage.getItem('listY'); if (y !== null) sessionStorage.setItem('restoreY', y); } catch {} }));
 }
 
 function reveal() {

@@ -74,6 +74,7 @@ h1, h2, h3, h4 { color: var(--c-ink); line-height: var(--lh-tight); letter-spaci
   transition: transform var(--d-fast) var(--ease-out), background-color var(--d-fast) var(--ease-out), box-shadow var(--d-fast) var(--ease-out);
 }
 .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-2); }
+.btn:not(.btn--ghost):hover { --btn-bg: var(--c-btn-hover, var(--c-btn-bg)); }
 .btn:active { transform: translateY(0) scale(.98); }
 .btn--ghost { --btn-bg: transparent; --btn-fg: var(--c-ink); box-shadow: inset 0 0 0 1px var(--c-line-strong); }
 .btn--ghost:hover { --btn-bg: var(--c-surface); box-shadow: inset 0 0 0 1px var(--c-ink); }
@@ -94,6 +95,7 @@ html.js [data-reveal] {
   transition-delay: calc(var(--i, 0) * var(--stagger));
 }
 html.js [data-reveal].is-in { opacity: 1; transform: none; }
+html.no-anim [data-reveal] { transition: none !important; }   /* 목록 복귀 시 즉시 표시 */
 
 /* Hero line mask reveal */
 .line-mask { display: block; overflow: hidden; padding-bottom: .08em; }

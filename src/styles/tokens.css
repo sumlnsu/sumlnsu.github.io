@@ -6,27 +6,28 @@
 
 :root {
   /* ---- Brand ---- */
-  --c-brand: #0b1838;        /* Midnight Navy: 아이덴티티 색. 화이트와 강한 대비 */
-  --c-brand-2: #15265a;      /* hover·눌림 등 한 단계 밝은 네이비 */
+  --c-brand: #1f3a93;        /* Midnight Navy: 아이덴티티 색. 검정과 확실히 구분되는 푸른 네이비 (흰 글자 대비 약 9:1) */
+  --c-brand-2: #2a4bb0;      /* hover·눌림 등 한 단계 밝은 네이비 */
   --c-brand-ink: #ffffff;    /* 네이비 위 텍스트 */
 
   /* ---- Color (light) ---- */
   --c-bg: #ffffff;           /* 순백: 네이비와의 대비를 위해 */
   --c-surface: #ffffff;
   --c-surface-2: #f4f6fa;    /* 차가운 회백색: 카드·탭 배경 */
-  --c-ink: #0e1220;          /* 네이비 기가 살짝 도는 검정 */
-  --c-ink-2: #3a4152;
+  --c-ink: #111318;          /* 중립 검정: 네이비와 섞이지 않게 */
+  --c-ink-2: #3b3f48;
   --c-muted: #737a8c;
   --c-line: #e6e9f0;
   --c-line-strong: #cdd2dd;
   --c-accent: var(--c-brand);    /* 강조 = 브랜드 네이비 */
   --c-accent-ink: var(--c-brand-ink);
-  --c-accent-soft: #eef1f8;
+  --c-accent-soft: #edf2ff;
   --c-btn-bg: var(--c-brand);    /* 주 버튼 */
   --c-btn-fg: #ffffff;
+  --c-btn-hover: var(--c-brand-2);
   --c-positive: #12805c;
   --c-negative: #c4372b;
-  --c-selection: #d6ddf0;
+  --c-selection: #d5e0ff;
 
   /* ---- Typography ---- */
   /* Pretendard: 토스 등 국내 서비스가 쓰는 산세리프 계열의 표준 대안 (라틴은 Inter, 한글은 본고딕 기반).
@@ -67,8 +68,8 @@
   --r-md: 14px;
   --r-lg: 22px;
   --r-pill: 999px;
-  --shadow-1: 0 1px 2px rgb(11 24 56 / .05), 0 4px 16px rgb(11 24 56 / .05);
-  --shadow-2: 0 2px 6px rgb(11 24 56 / .08), 0 16px 48px rgb(11 24 56 / .12);
+  --shadow-1: 0 1px 2px rgb(31 58 147 / .05), 0 4px 16px rgb(31 58 147 / .05);
+  --shadow-2: 0 2px 6px rgb(31 58 147 / .08), 0 16px 48px rgb(31 58 147 / .12);
 
   /* ---- Motion ---- */
   --ease-out: cubic-bezier(.16, 1, .3, 1);      /* 기본: 빠르게 시작해 부드럽게 멈춤 */
@@ -85,8 +86,8 @@
     --c-bg: #060b1a; --c-surface: #0d1530; --c-surface-2: #121c3a;
     --c-ink: #f2f4f9; --c-ink-2: #c6cbd8; --c-muted: #8890a6;
     --c-line: #1c2647; --c-line-strong: #2c3860;
-    --c-brand: #0b1838; --c-brand-2: #1a2c66;
-    --c-accent: #a9bbff; --c-accent-ink: #060b1a; --c-accent-soft: #131f45; --c-btn-bg: #f2f4f9; --c-btn-fg: #060b1a;
+    --c-brand: #1f3a93; --c-brand-2: #2a4bb0;
+    --c-accent: #9db4ff; --c-accent-ink: #060b1a; --c-accent-soft: #131f45; --c-btn-bg: #f2f4f9; --c-btn-fg: #060b1a; --c-btn-hover: #ffffff;
     --c-positive: #4cc59a; --c-negative: #ff7b6e; --c-selection: #24346b;
     --shadow-1: 0 1px 2px rgb(0 0 0 / .35); --shadow-2: 0 16px 48px rgb(0 0 0 / .5);
   }
@@ -95,8 +96,8 @@
   --c-bg: #060b1a; --c-surface: #0d1530; --c-surface-2: #121c3a;
   --c-ink: #f2f4f9; --c-ink-2: #c6cbd8; --c-muted: #8890a6;
   --c-line: #1c2647; --c-line-strong: #2c3860;
-  --c-brand: #0b1838; --c-brand-2: #1a2c66;
-  --c-accent: #a9bbff; --c-accent-ink: #060b1a; --c-accent-soft: #131f45; --c-btn-bg: #f2f4f9; --c-btn-fg: #060b1a;
+  --c-brand: #1f3a93; --c-brand-2: #2a4bb0;
+  --c-accent: #9db4ff; --c-accent-ink: #060b1a; --c-accent-soft: #131f45; --c-btn-bg: #f2f4f9; --c-btn-fg: #060b1a; --c-btn-hover: #ffffff;
   --c-positive: #4cc59a; --c-negative: #ff7b6e; --c-selection: #24346b;
   --shadow-1: 0 1px 2px rgb(0 0 0 / .35); --shadow-2: 0 16px 48px rgb(0 0 0 / .5);
 }
