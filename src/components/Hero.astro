@@ -26,5 +26,9 @@ const t = tracks[track];
   .hero__title { font-size: var(--t-display); font-weight: 800; line-height: 1.1; letter-spacing: -.045em; }
   .hero__lead { max-width: 600px; font-size: var(--t-lead); color: var(--c-ink-2); line-height: 1.7; }
   .hero__cta { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-bottom: var(--s-5); }
-  @media (max-width: 520px) { .hero__title { font-size: clamp(2rem, 9vw, 2.5rem); } }
+  @media (max-width: 520px) {
+    .hero { padding-top: var(--s-8); }
+    .hero__title { font-size: clamp(1.875rem, 8.6vw, 2.5rem); }
+    .hero__cta .btn { flex: 1 1 auto; }
+  }
 </style>

@@ -1,29 +1,37 @@
 /* ==========================================================
-   SUMIN Design System — Tokens  (v0.1, 2026-10-19)
+   SUMIN Design System — Tokens  (v0.2, 2026-10-19)
    모든 색·글꼴·간격·모션 값은 여기서만 정의한다. 컴포넌트는 var()로만 참조.
    자세한 원칙은 /DESIGN.md
    ========================================================== */
 
 :root {
+  /* ---- Brand ---- */
+  --c-brand: #0b1838;        /* Midnight Navy: 아이덴티티 색. 화이트와 강한 대비 */
+  --c-brand-2: #15265a;      /* hover·눌림 등 한 단계 밝은 네이비 */
+  --c-brand-ink: #ffffff;    /* 네이비 위 텍스트 */
+
   /* ---- Color (light) ---- */
-  --c-bg: #fafaf8;          /* 따뜻한 오프화이트: 종이 같은 에디토리얼 톤 */
+  --c-bg: #ffffff;           /* 순백: 네이비와의 대비를 위해 */
   --c-surface: #ffffff;
-  --c-surface-2: #f2f1ed;
-  --c-ink: #121212;         /* 본문 최상위 텍스트 */
-  --c-ink-2: #3c3b38;       /* 본문 */
-  --c-muted: #7a7872;       /* 보조 정보·캡션 */
-  --c-line: #e6e4df;
-  --c-line-strong: #cfccc4;
-  --c-accent: #2e5bff;      /* 유일한 강조색: 링크·지표·포커스에만 */
-  --c-accent-ink: #ffffff;
-  --c-accent-soft: #edf1ff;
+  --c-surface-2: #f4f6fa;    /* 차가운 회백색: 카드·탭 배경 */
+  --c-ink: #0e1220;          /* 네이비 기가 살짝 도는 검정 */
+  --c-ink-2: #3a4152;
+  --c-muted: #737a8c;
+  --c-line: #e6e9f0;
+  --c-line-strong: #cdd2dd;
+  --c-accent: var(--c-brand);    /* 강조 = 브랜드 네이비 */
+  --c-accent-ink: var(--c-brand-ink);
+  --c-accent-soft: #eef1f8;
+  --c-btn-bg: var(--c-brand);    /* 주 버튼 */
+  --c-btn-fg: #ffffff;
   --c-positive: #12805c;
   --c-negative: #c4372b;
-  --c-selection: #d7e0ff;
+  --c-selection: #d6ddf0;
 
   /* ---- Typography ---- */
+  /* Pretendard: 토스 등 국내 서비스가 쓰는 산세리프 계열의 표준 대안 (라틴은 Inter, 한글은 본고딕 기반).
+     토스 전용 글꼴(Toss Product Sans)과 애플 SF Pro는 외부 웹 사용 라이선스가 없어 쓰지 않는다. */
   --f-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
-  --f-serif: "Instrument Serif", "Times New Roman", serif; /* 영문 라벨·숫자 전용 (에디토리얼 악센트) */
   --f-mono: ui-monospace, "SFMono-Regular", Consolas, monospace;
 
   --t-display: clamp(2.5rem, 1.6rem + 4.6vw, 5.25rem);
@@ -40,6 +48,7 @@
   --lh-snug: 1.35;
   --lh-body: 1.75;
   --tracking-tight: -.03em;
+  --tracking-num: -.04em;     /* 큰 숫자: 촘촘하게 */
   --tracking-label: .14em;
 
   /* ---- Space (4px base) ---- */
@@ -58,8 +67,8 @@
   --r-md: 14px;
   --r-lg: 22px;
   --r-pill: 999px;
-  --shadow-1: 0 1px 2px rgb(18 18 18 / .04), 0 4px 16px rgb(18 18 18 / .04);
-  --shadow-2: 0 2px 6px rgb(18 18 18 / .06), 0 16px 48px rgb(18 18 18 / .08);
+  --shadow-1: 0 1px 2px rgb(11 24 56 / .05), 0 4px 16px rgb(11 24 56 / .05);
+  --shadow-2: 0 2px 6px rgb(11 24 56 / .08), 0 16px 48px rgb(11 24 56 / .12);
 
   /* ---- Motion ---- */
   --ease-out: cubic-bezier(.16, 1, .3, 1);      /* 기본: 빠르게 시작해 부드럽게 멈춤 */
@@ -70,24 +79,26 @@
   --stagger: 70ms;
 }
 
-/* ---- Color (dark) : 시스템 설정을 따르되, 수동 선택이 우선 ---- */
+/* ---- Color (dark) : 미드나잇 네이비 배경. 시스템 설정을 따르되, 수동 선택이 우선 ---- */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --c-bg: #0e0e0f; --c-surface: #161618; --c-surface-2: #1d1d20;
-    --c-ink: #f3f2ef; --c-ink-2: #cfcdc8; --c-muted: #8f8d87;
-    --c-line: #29292c; --c-line-strong: #3a3a3e;
-    --c-accent: #7d97ff; --c-accent-ink: #0e0e0f; --c-accent-soft: #1a2142;
-    --c-positive: #4cc59a; --c-negative: #ff7b6e; --c-selection: #2a3566;
-    --shadow-1: 0 1px 2px rgb(0 0 0 / .3); --shadow-2: 0 16px 48px rgb(0 0 0 / .45);
+    --c-bg: #060b1a; --c-surface: #0d1530; --c-surface-2: #121c3a;
+    --c-ink: #f2f4f9; --c-ink-2: #c6cbd8; --c-muted: #8890a6;
+    --c-line: #1c2647; --c-line-strong: #2c3860;
+    --c-brand: #0b1838; --c-brand-2: #1a2c66;
+    --c-accent: #a9bbff; --c-accent-ink: #060b1a; --c-accent-soft: #131f45; --c-btn-bg: #f2f4f9; --c-btn-fg: #060b1a;
+    --c-positive: #4cc59a; --c-negative: #ff7b6e; --c-selection: #24346b;
+    --shadow-1: 0 1px 2px rgb(0 0 0 / .35); --shadow-2: 0 16px 48px rgb(0 0 0 / .5);
   }
 }
 :root[data-theme="dark"] {
-  --c-bg: #0e0e0f; --c-surface: #161618; --c-surface-2: #1d1d20;
-  --c-ink: #f3f2ef; --c-ink-2: #cfcdc8; --c-muted: #8f8d87;
-  --c-line: #29292c; --c-line-strong: #3a3a3e;
-  --c-accent: #7d97ff; --c-accent-ink: #0e0e0f; --c-accent-soft: #1a2142;
-  --c-positive: #4cc59a; --c-negative: #ff7b6e; --c-selection: #2a3566;
-  --shadow-1: 0 1px 2px rgb(0 0 0 / .3); --shadow-2: 0 16px 48px rgb(0 0 0 / .45);
+  --c-bg: #060b1a; --c-surface: #0d1530; --c-surface-2: #121c3a;
+  --c-ink: #f2f4f9; --c-ink-2: #c6cbd8; --c-muted: #8890a6;
+  --c-line: #1c2647; --c-line-strong: #2c3860;
+  --c-brand: #0b1838; --c-brand-2: #1a2c66;
+  --c-accent: #a9bbff; --c-accent-ink: #060b1a; --c-accent-soft: #131f45; --c-btn-bg: #f2f4f9; --c-btn-fg: #060b1a;
+  --c-positive: #4cc59a; --c-negative: #ff7b6e; --c-selection: #24346b;
+  --shadow-1: 0 1px 2px rgb(0 0 0 / .35); --shadow-2: 0 16px 48px rgb(0 0 0 / .5);
 }
 
 @media (prefers-reduced-motion: reduce) {

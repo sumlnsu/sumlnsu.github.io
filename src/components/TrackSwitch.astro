@@ -31,4 +31,8 @@ const { current } = Astro.props;
   .switch__item.is-active { color: var(--c-ink); }
   .switch__pill { position: absolute; inset: 0; border-radius: inherit; background: var(--c-surface); box-shadow: var(--shadow-1); }
   .switch__label { position: relative; }
+  @media (max-width: 520px) {
+    .switch, .switch__bar { width: 100%; }
+    .switch__item { flex: 1; min-width: 0; padding: 0; height: 44px; }
+  }
 </style>

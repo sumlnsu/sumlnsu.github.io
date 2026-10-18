@@ -4,7 +4,7 @@ const year = new Date().getFullYear();
 ---
 <footer class="footer">
   <div class="container footer__inner">
-    <p>© {year} {person.name} · <span class="serif-i">Built with care, one detail at a time.</span></p>
+    <p>© {year} {person.name} · <span class="en-label">Built with care, one detail at a time.</span></p>
     <a href="#main" class="to-top" aria-label="맨 위로">맨 위로 ↑</a>
   </div>
 </footer>
@@ -12,7 +12,7 @@ const year = new Date().getFullYear();
 <style>
   .footer { border-top: 1px solid var(--c-line); padding-block: var(--s-6); color: var(--c-muted); font-size: var(--t-caption); }
   .footer__inner { display: flex; justify-content: space-between; align-items: center; gap: var(--s-4); flex-wrap: wrap; }
-  .footer .serif-i { font-size: 1rem; }
+  .footer .en-label { font-weight: 500; color: var(--c-muted); }
   .to-top { color: var(--c-ink); font-weight: 600; }
   .to-top:hover { color: var(--c-accent); }
 </style>

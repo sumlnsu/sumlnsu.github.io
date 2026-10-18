@@ -39,8 +39,8 @@ const meta = [
     </header>
 
     <section class="tldr" aria-labelledby="tldr-title" data-reveal>
-      <h2 id="tldr-title" class="tldr__title"><span class="serif-i">TL;DR</span> 30초 요약</h2>
-      <ol>{d.tldr.map((line, i) => <li><span class="tldr__no serif">{i + 1}</span><span>{line}</span></li>)}</ol>
+      <h2 id="tldr-title" class="tldr__title"><span class="en-label">TL;DR</span> 30초 요약</h2>
+      <ol>{d.tldr.map((line, i) => <li><span class="tldr__no num">{i + 1}</span><span>{line}</span></li>)}</ol>
     </section>
 
     {d.metrics.length > 0 && (
@@ -82,7 +82,7 @@ const meta = [
 
         {d.askMe.length > 0 && (
           <div class="ask">
-            <p class="ask__label"><span class="serif-i">Ask me about</span> 면접에서 물어봐 주세요</p>
+            <p class="ask__label"><span class="en-label">Ask me about</span> 면접에서 물어봐 주세요</p>
             <ul>{d.askMe.map((q) => <li>{q}</li>)}</ul>
           </div>
         )}
@@ -111,12 +111,12 @@ const meta = [
 
   .tldr { padding: clamp(24px, 4vw, 40px); border-radius: var(--r-lg); background: var(--c-accent-soft); }
   .tldr__title { font-size: var(--t-small); font-weight: 700; display: flex; align-items: baseline; gap: var(--s-2); margin-bottom: var(--s-4); color: var(--c-accent); }
-  .tldr__title .serif-i { font-size: 1.5rem; }
+  .tldr__title .en-label { font-size: var(--t-small); }
   .tldr ol { display: grid; gap: var(--s-3); }
   .tldr li { display: grid; grid-template-columns: 28px 1fr; gap: var(--s-2); color: var(--c-ink); font-size: var(--t-body); line-height: 1.65; }
-  .tldr__no { font-size: 1.35rem; line-height: 1.2; color: var(--c-accent); }
+  .tldr__no { font-size: 1.05rem; line-height: 1.6; color: var(--c-accent); }
 
-  .detail__metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--s-6) var(--s-5); padding-block: var(--s-8); }
+  .detail__metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--s-6) var(--s-5); padding-block: var(--s-8); }
   .detail__flow { display: grid; gap: var(--s-4); padding-bottom: var(--s-8); }
 
   .detail__body { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: var(--s-8); padding-top: var(--s-7); border-top: 1px solid var(--c-line); }
@@ -137,7 +137,7 @@ const meta = [
   .prose :global(ul > li)::before { content: ""; position: absolute; left: 2px; top: .8em; width: 5px; height: 5px; border-radius: 50%; background: var(--c-line-strong); }
   .prose :global(ol) { counter-reset: n; }
   .prose :global(ol > li) { position: relative; padding-left: 28px; counter-increment: n; }
-  .prose :global(ol > li)::before { content: counter(n); position: absolute; left: 0; top: 0; font-family: var(--f-serif); font-size: 1.15rem; color: var(--c-accent); }
+  .prose :global(ol > li)::before { content: counter(n); position: absolute; left: 0; top: 0; font-weight: 700; font-size: var(--t-small); line-height: 1.9; color: var(--c-accent); font-variant-numeric: tabular-nums; }
   .prose :global(table) { width: 100%; border-collapse: collapse; font-size: var(--t-small); margin-bottom: var(--s-5); display: block; overflow-x: auto; }
   .prose :global(th), .prose :global(td) { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--c-line); vertical-align: top; }
   .prose :global(th) { color: var(--c-muted); font-weight: 600; font-size: var(--t-caption); }
@@ -155,7 +155,7 @@ const meta = [
 
   .ask { margin-top: var(--s-8); padding: var(--s-5) var(--s-5) var(--s-3); border-radius: var(--r-lg); border: 1px dashed var(--c-line-strong); }
   .ask__label { display: flex; align-items: baseline; gap: var(--s-2); font-size: var(--t-small); font-weight: 700; color: var(--c-ink); }
-  .ask__label .serif-i { font-size: 1.35rem; }
+  .ask__label { flex-wrap: wrap; }
 
   .pager { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); padding-block: var(--s-9) var(--s-6); }
   .pager__item { display: grid; gap: var(--s-2); padding: var(--s-5); border-radius: var(--r-lg); border: 1px solid var(--c-line); color: var(--c-ink); font-weight: 600; transition: background-color var(--d-base) var(--ease-out); }

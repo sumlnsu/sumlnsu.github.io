@@ -3,14 +3,14 @@ import { principles, experience } from '../data/profile';
 ---
 <section id="about" class="section container" aria-labelledby="about-title">
   <div class="section-head" data-reveal>
-    <p class="section-head__label"><span class="serif-i">How I work</span><span class="eyebrow">일하는 방식</span></p>
+    <p class="section-head__label"><span class="en-label">How I work</span><span class="eyebrow">일하는 방식</span></p>
     <h2 id="about-title">문제가 다시 생기지 않는 구조를 만듭니다</h2>
   </div>
 
   <ol class="principles">
     {principles.map((p, i) => (
       <li class="principle" data-reveal style={`--i:${i}`}>
-        <span class="principle__no serif">{p.no}</span>
+        <span class="principle__no num">{p.no}</span>
         <h3>{p.title}</h3>
         <p>{p.body}</p>
       </li>
@@ -39,7 +39,7 @@ import { principles, experience } from '../data/profile';
 <style>
   .principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-6); margin-bottom: var(--s-9); }
   .principle { display: grid; gap: var(--s-3); align-content: start; padding-top: var(--s-5); border-top: 1px solid var(--c-ink); }
-  .principle__no { font-size: 3rem; line-height: 1; color: var(--c-accent); }
+  .principle__no { font-size: clamp(2.25rem, 1.8rem + 1.5vw, 3rem); line-height: 1; color: var(--c-accent); }
   .principle h3 { font-size: var(--t-h3); }
   .principle p { font-size: var(--t-small); color: var(--c-ink-2); }
   .exp__title { margin-bottom: var(--s-4); }

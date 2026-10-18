@@ -7,7 +7,7 @@ const { items } = Astro.props;
   {items.map((p, i) => (
     <li data-reveal style={`--i:${i % 4}`}>
       <a href={`/work/${p.id}/`} class="row">
-        <span class="row__no serif-i" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+        <span class="row__no en-label" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
         <span class="row__main">
           <span class="row__meta">
             <span>{p.data.kind}</span><span aria-hidden="true">·</span><span>{p.data.period}</span>
@@ -18,7 +18,7 @@ const { items } = Astro.props;
         </span>
         {p.data.metrics[0] && (
           <span class="row__metric">
-            <span class="row__metric-value serif">{p.data.metrics[0].value}</span>
+            <span class="row__metric-value num">{p.data.metrics[0].value}</span>
             <span class="row__metric-label">{p.data.metrics[0].label}</span>
           </span>
         )}
@@ -37,7 +37,7 @@ const { items } = Astro.props;
     transition: background-color var(--d-base) var(--ease-out);
   }
   .row:hover { background: var(--c-surface); }
-  .row__no { font-size: 1.6rem; color: var(--c-muted); transition: color var(--d-fast) var(--ease-out); }
+  .row__no { font-size: var(--t-small); font-variant-numeric: tabular-nums; color: var(--c-muted); transition: color var(--d-fast) var(--ease-out); }
   .row:hover .row__no { color: var(--c-accent); }
   .row__main { display: grid; gap: var(--s-2); }
   .row__meta { display: flex; flex-wrap: wrap; gap: 6px; font-size: var(--t-caption); color: var(--c-muted); }
